@@ -1275,6 +1275,9 @@ namespace EvaluationSys
             try
             {
                 this.dataGridView1.DataSource = dtScore;
+
+                this.btn_save.Enabled = true;
+                this.btn_selectAll.Enabled = true;
             }
             catch (Exception ex)
             {
