@@ -1268,9 +1268,6 @@ namespace EvaluationSys
                     dr["HighPost"] = Math.Round(graHighPost, 1);
                     dtScore.Rows.Add(dr);
                     #endregion
-
-
-
                 }
             }
 
