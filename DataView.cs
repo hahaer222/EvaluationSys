@@ -1154,6 +1154,8 @@ namespace EvaluationSys
         /// <param name="e"></param>
         private void btn_analyse_Click(object sender, EventArgs e)
         {
+            this.btn_save.Enabled = false;
+            this.btn_selectAll.Enabled = false;
             dtScore.Clear();
             if (startAge.Value > endAge.Value)
             {
