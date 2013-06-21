@@ -106,9 +106,9 @@ namespace EvaluationSys
             DataColumn dc14 = new DataColumn("Personid", typeof(System.String));
             DataColumn dc15 = new DataColumn("idcard", typeof(System.String));
             DataColumn dc16 = new DataColumn("CtrlYear", typeof(System.String));
-            DataColumn dc17 = new DataColumn("CtrlDuty", typeof(System.String));
-            DataColumn dc18 = new DataColumn("HighPost", typeof(System.String));
-            DataColumn dc19 = new DataColumn("PermitCheck", typeof(System.String));
+            DataColumn dc17 = new DataColumn("CtrlDuty", typeof(System.Double));
+            DataColumn dc18 = new DataColumn("HighPost", typeof(System.Double));
+            DataColumn dc19 = new DataColumn("PermitCheck", typeof(System.Double));
 
             dtScore.Columns.Add(dc0);
             dtScore.Columns.Add(dc1);
