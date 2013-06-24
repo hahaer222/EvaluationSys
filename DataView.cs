@@ -985,14 +985,14 @@ namespace EvaluationSys
             string sql = "select * from tb_checkerinfo t where personid='" + id + "'";
 
             DataTable dtchecker = OracleAccess.GetInstance().GetDatatable(sql);
-
+            
             if (dtchecker != null && dtchecker.Rows.Count > 0)
             {
                 for (int i = 0; i < dt.Rows.Count; i++)
                 {
-                    if (dt.Rows[0]["管制水平级别"].ToString() == "管制检察员")
+                    if (dt.Rows[i]["管制水平级别"].ToString() == "管制检察员")
                     {
-                        score += double.Parse(dt.Rows[0]["分数"].ToString());
+                        score += double.Parse(dt.Rows[i]["分数"].ToString());
                         break;
                     }
                 }
@@ -1006,9 +1006,9 @@ namespace EvaluationSys
             {
                 for (int i = 0; i < dt.Rows.Count; i++)
                 {
-                    if (dt.Rows[0]["管制水平级别"].ToString() == "管制教员")
+                    if (dt.Rows[i]["管制水平级别"].ToString() == "管制教员")
                     {
-                        score += double.Parse(dt.Rows[0]["分数"].ToString());
+                        score += double.Parse(dt.Rows[i]["分数"].ToString());
                         break;
                     }
                 }
