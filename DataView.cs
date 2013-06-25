@@ -422,7 +422,6 @@ namespace EvaluationSys
                     }
                 }
             }
-
             #region
 
             Dictionary<string, double> dic = new Dictionary<string, double>();
@@ -503,6 +502,7 @@ namespace EvaluationSys
             }
             return PostTotalScore.ToString();
             #endregion
+            #region Delete            
             //string[] licenseArray = licenseList.Split(',');
             //List<string> lst = new List<string>();
             //if (currentpost != null)
@@ -567,10 +567,10 @@ namespace EvaluationSys
 
             //            }
 
-
             //        }
             //    }
             //}
+            #endregion
             return "0";
         }
         /// <summary>
