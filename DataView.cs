@@ -961,7 +961,7 @@ namespace EvaluationSys
             {
                 if (dt.Rows[i]["行政职务"] != null && dt.Rows[i]["行政职务"].ToString() != "")
                 {
-                    if (dt.Rows[i]["分数"] != null && dt.Rows[i]["分数"].ToString() == duty)
+                    if (dt.Rows[i]["行政职务"] != null && dt.Rows[i]["行政职务"].ToString() == duty)
                     {
                         return dt.Rows[i]["分数"].ToString();
                     }
