@@ -148,7 +148,7 @@ namespace EvaluationSys
         private string getEducationScore(string personId)
         {
             String selectAtcBodyCheckSql = "select t.studymethod,t.getdegree,t.geteducation from tb_education_ctrl t where t.personid='" + personId + "' order by t.graduationdatetime desc";
-            string unATCSql = "select personid,geteducation,getdegree from tb_education_unctrl t where (personid,graduationdatetime) in(select personid ,max(ue.graduationdatetime) from tb_education_unctrl ue group by personid ) where t.personid='" + personId + "'";
+            string unATCSql = "select geteducation,getdegree from tb_education_unctrl t where t.personid='" + personId + "'";
             DataTable dtEducation = OracleAccess.GetInstance().GetDatatable(selectAtcBodyCheckSql);
 
             string atcEducation = "";
@@ -180,7 +180,22 @@ namespace EvaluationSys
                         string mode = dtEducation.Rows[0]["studymethod"].ToString();
                         if (mode == "大改" && string.IsNullOrEmpty(atcDegree) && string.IsNullOrEmpty(atcEducation))
                         {
-                            return "8";
+                            DataTable dttemp = OracleAccess.GetInstance().GetDatatable(unATCSql);
+                            if (dttemp != null && dttemp.Rows.Count > 0)
+                            {
+                                bool flag = false;
+                                for (int i = 0; i < dttemp.Rows.Count; i++)
+                                {
+                                    string edu = dttemp.Rows[i]["geteducation"].ToString();
+                                    string degree = dttemp.Rows[i]["getdegree"].ToString();
+                                    if (edu == "本科" || edu == "硕士研究生" || edu == "博士研究生" || degree == "学士" || degree == "硕士" || degree == "博士")
+                                    {
+                                        flag = true; break;
+                                    }
+                                }
+                                if (flag)
+                                    return "8";
+                            }
                         }
                         else
                         {
@@ -192,7 +207,7 @@ namespace EvaluationSys
                                 }
                             }
                         }
-                       
+
                     }
                     else
                     {
