@@ -147,7 +147,8 @@ namespace EvaluationSys
         /// <returns></returns>
         private string getEducationScore(string personId)
         {
-            String selectAtcBodyCheckSql = "select t.getdegree,t.geteducation from tb_education_ctrl t where t.personid='" + personId + "' order by t.graduationdatetime desc";
+            String selectAtcBodyCheckSql = "select t.studymethod,t.getdegree,t.geteducation from tb_education_ctrl t where t.personid='" + personId + "' order by t.graduationdatetime desc";
+            string unATCSql = "select personid,geteducation,getdegree from tb_education_unctrl t where (personid,graduationdatetime) in(select personid ,max(ue.graduationdatetime) from tb_education_unctrl ue group by personid ) where t.personid='" + personId + "'";
             DataTable dtEducation = OracleAccess.GetInstance().GetDatatable(selectAtcBodyCheckSql);
 
             string atcEducation = "";
@@ -176,13 +177,22 @@ namespace EvaluationSys
                     {
                         atcEducation = dtEducation.Rows[0]["geteducation"].ToString();
                         atcDegree = dtEducation.Rows[0]["getdegree"].ToString();
-                        for (int i = 0; i < dt.Rows.Count; i++)
+                        string mode = dtEducation.Rows[0]["studymethod"].ToString();
+                        if (mode == "大改" && string.IsNullOrEmpty(atcDegree) && string.IsNullOrEmpty(atcEducation))
                         {
-                            if (atcEducation == dt.Rows[i]["管制学历"].ToString() && atcDegree == dt.Rows[i]["管制学位"].ToString())
+                            return "8";
+                        }
+                        else
+                        {
+                            for (int i = 0; i < dt.Rows.Count; i++)
                             {
-                                return dt.Rows[i]["管制分数"].ToString();
+                                if (atcEducation == dt.Rows[i]["管制学历"].ToString() && atcDegree == dt.Rows[i]["管制学位"].ToString())
+                                {
+                                    return dt.Rows[i]["管制分数"].ToString();
+                                }
                             }
                         }
+                       
                     }
                     else
                     {
@@ -208,7 +218,7 @@ namespace EvaluationSys
                 string education = dtEducation.Rows[0]["geteducation"].ToString();
                 string degree = dtEducation.Rows[0]["getdegree"].ToString();
                 DateTime time = DateTime.Parse(dtEducation.Rows[0]["GRADUATIONDATETIME"].ToString());
-                int gotYear = 1;
+                double gotYear = 1;
                 try
                 {
                     if ((time - worksince).Days / 365 <= 1)
@@ -217,7 +227,7 @@ namespace EvaluationSys
                     }
                     else
                     {
-                        gotYear = (time - worksince).Days / 365 + 1;
+                        gotYear = (time - worksince).Days / 365.0;
                     }
                 }
                 catch (Exception ex)
@@ -502,7 +512,7 @@ namespace EvaluationSys
             }
             return PostTotalScore.ToString();
             #endregion
-            #region Delete            
+            #region Delete
             //string[] licenseArray = licenseList.Split(',');
             //List<string> lst = new List<string>();
             //if (currentpost != null)
@@ -599,7 +609,7 @@ namespace EvaluationSys
                             int sYear = Int32.Parse(dt.Rows[i]["起始时间(管制)"].ToString());
                             int eYear = Int32.Parse(dt.Rows[i]["结束时间(管制)"].ToString());
 
-                            if (workSince.AddYears(sYear) <= DateTime.Now && workSince.AddYears(eYear) > DateTime.Now)
+                            if (workSince.AddYears(sYear) < DateTime.Now && workSince.AddYears(eYear) >= DateTime.Now)
                             {
                                 score += Convert.ToDouble(dt.Rows[i]["分数(管制)"].ToString());
                             }
@@ -617,7 +627,7 @@ namespace EvaluationSys
                         int sYear = Int32.Parse(dt.Rows[i]["起始时间(普通)"].ToString());
                         int eYear = Int32.Parse(dt.Rows[i]["结束时间(普通)"].ToString());
 
-                        if (workSince.AddYears(sYear) <= DateTime.Now && workSince.AddYears(eYear) > DateTime.Now)
+                        if (workSince.AddYears(sYear) < DateTime.Now && workSince.AddYears(eYear) >= DateTime.Now)
                         {
                             score += Convert.ToDouble(dt.Rows[i]["分数(普通)"].ToString());
                         }
@@ -695,7 +705,7 @@ namespace EvaluationSys
             if (dt != null && dt.Rows.Count > 0)
             {
                 //int yearRange = Int32.Parse(dtCriteria.Rows[0]["时间范围"].ToString());
-                int freq = Int32.Parse(dtCriteria.Rows[0]["次数"].ToString());
+                double freq = double.Parse(dtCriteria.Rows[0]["次数"].ToString());
                 double score = double.Parse(dtCriteria.Rows[0]["分数"].ToString());
                 for (int i = 0; i < dt.Rows.Count; i++)
                 {
@@ -736,7 +746,7 @@ namespace EvaluationSys
             double addUpLimit = 0;
             double totalScore = 0;
             int timeScope = 0;
-            int workYears = (DateTime.Now - controlWorkSince).Days / 365;
+            //double workYears = (DateTime.Now - controlWorkSince).Days / 365.0;
             for (int i = 0; i < dtCriteria.Rows.Count; i++)
             {
                 if (dtCriteria.Rows[i]["分数上限（基础项）"].ToString().Length > 0)
@@ -764,7 +774,7 @@ namespace EvaluationSys
                                            traintype,to_char(t.enddate,'yyyy') having personid = '" + baseId + "'";
 
             DataTable dtBase = OracleAccess.GetInstance().GetDatatable(baseTrainDutySql);
-            int totalCount = Convert.ToInt32((DateTime.Now - controlWorkSince).TotalDays / 365);
+            double totalCount = Convert.ToDouble((DateTime.Now - controlWorkSince).TotalDays / 365.0);
             if (dtBase != null && dtBase.Rows.Count > 0)
             {
                 for (int i = 0; i < dtCriteria.Rows.Count; i++)
@@ -807,7 +817,7 @@ namespace EvaluationSys
                 {
                     int cnt = 0;
                     string type = dtCriteria.Rows[j]["培训类别（加分项）"].ToString();
-                    int freq = Int32.Parse(dtCriteria.Rows[j]["满足次数（加分项）"].ToString());
+                    double freq = double.Parse(dtCriteria.Rows[j]["满足次数（加分项）"].ToString());
                     double score = double.Parse(dtCriteria.Rows[j]["分数（加分项）"].ToString());
                     for (int i = 0; i < dt.Rows.Count; i++)
                     {
@@ -932,7 +942,7 @@ namespace EvaluationSys
                     }
                     if (cnt < suspendCriteriaCount)
                     {
-                        int years = Convert.ToInt32((DateTime.Now - workSince).TotalDays / 365);
+                        double years = Convert.ToDouble((DateTime.Now - workSince).TotalDays / 365.0);
                         scores += years / (cnt + 1);
                     }
                 }
@@ -940,7 +950,7 @@ namespace EvaluationSys
             else
             {
                 //没有处罚 +分等于工作年限
-                scores += Convert.ToInt32((DateTime.Now - workSince).TotalDays / 365);
+                scores += Convert.ToDouble((DateTime.Now - workSince).TotalDays / 365.0);
             }
             return scores.ToString();
         }
@@ -985,7 +995,7 @@ namespace EvaluationSys
             string sql = "select * from tb_checkerinfo t where personid='" + id + "'";
 
             DataTable dtchecker = OracleAccess.GetInstance().GetDatatable(sql);
-            
+
             if (dtchecker != null && dtchecker.Rows.Count > 0)
             {
                 for (int i = 0; i < dt.Rows.Count; i++)
@@ -1022,7 +1032,7 @@ namespace EvaluationSys
         /// <param name="licenseList"></param>
         /// <param name="personId"></param>
         /// <returns></returns>
-        private string getCheckScore(String currentpost, String licenseList, String personId)
+        private string getCheckScore(String currentpost, String personId)
         {
             DataTable dt = dsCritical.Tables["放单$"];
             if (dt == null || dt.Rows.Count == 0)
@@ -1044,7 +1054,7 @@ namespace EvaluationSys
                     }
                 }
             }
-
+            
             #region
 
             Dictionary<string, double> dic = new Dictionary<string, double>();
@@ -1055,15 +1065,19 @@ namespace EvaluationSys
             List<string> lstC = new List<string>();
 
             lst.Clear();
-            if (licenseArray.Length > 1)
+            for (int i = 0; i < dtCheck.Rows.Count; i++)
             {
-                lst = licenseArray.ToList<string>();
+                lst.Add(dtCheck.Rows[i]["license"].ToString())
             }
-            else if (licenseArray.Length == 1)
-            {
-                if (licenseArray[0].Length > 0)
-                    lst.Add(licenseArray[0]);
-            }
+            //if (licenseArray.Length > 1)
+            //{
+            //    lst = licenseArray.ToList<string>();
+            //}
+            //else if (licenseArray.Length == 1)
+            //{
+            //    if (licenseArray[0].Length > 0)
+            //        lst.Add(licenseArray[0]);
+            //}
             dic.Clear();
             string criteriaStr = "";
             for (int i = 0; i < dt.Rows.Count; i++) //从标准中找到相应岗位的信息
@@ -1099,7 +1113,35 @@ namespace EvaluationSys
                 }
 
             }
+
             for (int i = 0; i < lst.Count; i++)
+            {
+                if (lstC.Contains(lst[i]))
+                {
+                    lstC.Remove(lst[i]);
+                    lst.Remove(lst[i]);
+                    i--;
+                }
+
+            }
+            if (lstC.Count > 0)
+            {
+                for (int i = 0; i < lstC.Count; i++)
+                {
+                    double per = dic[lstC[i]];
+                    PostTotalScore -= per;
+                }
+            }
+            if (lst.Count > 0)
+            {
+                for (int i = 0; i < lst.Count; i++)
+                {
+                    PostTotalScore += addScore;
+                }
+            }
+
+            #region delete
+		    /*for (int i = 0; i < lst.Count; i++)
             {
                 if (lstC.Contains(lst[i]))
                 {
@@ -1141,7 +1183,8 @@ namespace EvaluationSys
                 {
                     PostTotalScore += addScore;
                 }
-            }
+            } */
+	#endregion
             return PostTotalScore.ToString();
             #endregion
         }
@@ -1235,12 +1278,12 @@ namespace EvaluationSys
 
                     //教员和检查员
                     graTeacherAndChecker = double.Parse(getTeacherAndCheckerScore(personId));
-
-                    graPermitCheck = double.Parse(getCheckScore(dt.Rows[i]["CURRENTPOST"].ToString(), dt.Rows[i]["permitList"].ToString(),personId));
+                    //方单考核
+                    graPermitCheck = double.Parse(getCheckScore(dt.Rows[i]["CURRENTPOST"].ToString(), personId));
                     #endregion
 
                     //计算总分
-                    total = graedu + graold + graPermit + graWordate + graLevel + graEnglish + graCheckbody + gratrainDuty + gratrainAboard + graAdd + graHighPost + graTeacherAndChecker + graPermitCheck;
+                    total = graedu + graold + graPermit + graWordate + graLevel + graEnglish + graCheckbody + gratrainDuty + gratrainAboard + graAdd + graHighPost + graTeacherAndChecker + graPermitCheck + graDuty;
 
                     #region 存入dataTable
                     //

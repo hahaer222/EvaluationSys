@@ -102,7 +102,7 @@
             this.dataGridView1.Name = "dataGridView1";
             this.dataGridView1.RowHeadersVisible = false;
             this.dataGridView1.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dataGridView1.Size = new System.Drawing.Size(788, 190);
+            this.dataGridView1.Size = new System.Drawing.Size(788, 176);
             this.dataGridView1.TabIndex = 0;
             // 
             // Column15
@@ -250,15 +250,15 @@
             this.panel1.Dock = System.Windows.Forms.DockStyle.Top;
             this.panel1.Location = new System.Drawing.Point(0, 0);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(788, 72);
+            this.panel1.Size = new System.Drawing.Size(788, 66);
             this.panel1.TabIndex = 0;
             // 
             // btn_selectAll
             // 
             this.btn_selectAll.Enabled = false;
-            this.btn_selectAll.Location = new System.Drawing.Point(650, 24);
+            this.btn_selectAll.Location = new System.Drawing.Point(650, 22);
             this.btn_selectAll.Name = "btn_selectAll";
-            this.btn_selectAll.Size = new System.Drawing.Size(47, 23);
+            this.btn_selectAll.Size = new System.Drawing.Size(47, 21);
             this.btn_selectAll.TabIndex = 7;
             this.btn_selectAll.Text = "全选";
             this.btn_selectAll.UseVisualStyleBackColor = true;
@@ -267,9 +267,9 @@
             // btn_save
             // 
             this.btn_save.Enabled = false;
-            this.btn_save.Location = new System.Drawing.Point(703, 24);
+            this.btn_save.Location = new System.Drawing.Point(703, 22);
             this.btn_save.Name = "btn_save";
-            this.btn_save.Size = new System.Drawing.Size(47, 23);
+            this.btn_save.Size = new System.Drawing.Size(47, 21);
             this.btn_save.TabIndex = 7;
             this.btn_save.Text = "保存";
             this.btn_save.UseVisualStyleBackColor = true;
@@ -278,9 +278,9 @@
             // endAge
             // 
             this.endAge.Enabled = false;
-            this.endAge.Location = new System.Drawing.Point(508, 27);
+            this.endAge.Location = new System.Drawing.Point(508, 25);
             this.endAge.Name = "endAge";
-            this.endAge.Size = new System.Drawing.Size(52, 20);
+            this.endAge.Size = new System.Drawing.Size(52, 21);
             this.endAge.TabIndex = 6;
             this.endAge.Value = new decimal(new int[] {
             100,
@@ -291,66 +291,66 @@
             // startAge
             // 
             this.startAge.Enabled = false;
-            this.startAge.Location = new System.Drawing.Point(431, 27);
+            this.startAge.Location = new System.Drawing.Point(431, 25);
             this.startAge.Name = "startAge";
-            this.startAge.Size = new System.Drawing.Size(52, 20);
+            this.startAge.Size = new System.Drawing.Size(52, 21);
             this.startAge.TabIndex = 6;
             // 
             // label7
             // 
             this.label7.AutoSize = true;
-            this.label7.Location = new System.Drawing.Point(489, 30);
+            this.label7.Location = new System.Drawing.Point(489, 28);
             this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(13, 13);
+            this.label7.Size = new System.Drawing.Size(17, 12);
             this.label7.TabIndex = 5;
             this.label7.Text = "--";
             // 
             // txt_Idcard
             // 
-            this.txt_Idcard.Location = new System.Drawing.Point(261, 27);
+            this.txt_Idcard.Location = new System.Drawing.Point(261, 25);
             this.txt_Idcard.Name = "txt_Idcard";
-            this.txt_Idcard.Size = new System.Drawing.Size(116, 20);
+            this.txt_Idcard.Size = new System.Drawing.Size(116, 21);
             this.txt_Idcard.TabIndex = 3;
             // 
             // txt_name
             // 
-            this.txt_name.Location = new System.Drawing.Point(80, 30);
+            this.txt_name.Location = new System.Drawing.Point(80, 28);
             this.txt_name.Name = "txt_name";
-            this.txt_name.Size = new System.Drawing.Size(100, 20);
+            this.txt_name.Size = new System.Drawing.Size(100, 21);
             this.txt_name.TabIndex = 3;
             // 
             // label5
             // 
             this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(394, 30);
+            this.label5.Location = new System.Drawing.Point(394, 28);
             this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(31, 13);
+            this.label5.Size = new System.Drawing.Size(29, 12);
             this.label5.TabIndex = 1;
             this.label5.Text = "年龄";
             // 
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(200, 30);
+            this.label3.Location = new System.Drawing.Point(200, 28);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(55, 13);
+            this.label3.Size = new System.Drawing.Size(53, 12);
             this.label3.TabIndex = 1;
             this.label3.Text = "身份证号";
             // 
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(42, 30);
+            this.label1.Location = new System.Drawing.Point(42, 28);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(31, 13);
+            this.label1.Size = new System.Drawing.Size(29, 12);
             this.label1.TabIndex = 1;
             this.label1.Text = "姓名";
             // 
             // btn_analyse
             // 
-            this.btn_analyse.Location = new System.Drawing.Point(590, 25);
+            this.btn_analyse.Location = new System.Drawing.Point(590, 23);
             this.btn_analyse.Name = "btn_analyse";
-            this.btn_analyse.Size = new System.Drawing.Size(54, 23);
+            this.btn_analyse.Size = new System.Drawing.Size(54, 21);
             this.btn_analyse.TabIndex = 0;
             this.btn_analyse.Text = "分析";
             this.btn_analyse.UseVisualStyleBackColor = true;
@@ -360,16 +360,16 @@
             // 
             this.panel2.Controls.Add(this.dataGridView1);
             this.panel2.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panel2.Location = new System.Drawing.Point(0, 72);
+            this.panel2.Location = new System.Drawing.Point(0, 66);
             this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(788, 190);
+            this.panel2.Size = new System.Drawing.Size(788, 176);
             this.panel2.TabIndex = 1;
             // 
             // DataView
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(788, 262);
+            this.ClientSize = new System.Drawing.Size(788, 242);
             this.Controls.Add(this.panel2);
             this.Controls.Add(this.panel1);
             this.Name = "DataView";

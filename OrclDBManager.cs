@@ -13,7 +13,7 @@ namespace EvaluationSys
 
         public OrclDBManager()
         {
-            _connection.ConnectionString = "SERVER=(DESCRIPTION=(ADDRESS=(PROTOCOL=TCP)(HOST=192.168.241.160)(PORT=1521))(CONNECT_DATA=(SERVICE_NAME=gepes)));uid=airuser;pwd=air;";
+            _connection.ConnectionString = "SERVER=(DESCRIPTION=(ADDRESS=(PROTOCOL=TCP)(HOST=192.168.241.160)(PORT=1521))(CONNECT_DATA=(SERVICE_NAME=gepes)));uid=airuser2;pwd=air;";
             _connection.Open();
         }
 
